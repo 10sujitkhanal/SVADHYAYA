@@ -14,6 +14,7 @@ class UserProfileUpdateView(LoginRequiredMixin, View):
         user = request.user
         user.first_name = request.POST.get('fname')
         user.last_name = request.POST.get('lname')
-        user.profile_picture = request.FILES.get('profile_picture')
+        if request.FILES:
+            user.profile_picture = request.FILES.get('profile_picture')
         user.save()
         return redirect('profile')
