@@ -1,0 +1,107 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+<style>
+   .pagination-container {
+      display: flex;
+      justify-content: center;
+  }
+</style>
+<div id="content-page" class="content-page">
+    <div class="container-fluid">
+       <div class="row">
+          <div class="col-lg-12">
+             <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                <div class="iq-card-header d-flex justify-content-between align-items-center position-relative">
+                   <div class="iq-header-title">
+                      <h4 class="card-title mb-0">{{search_keywords|capfirst}} Videos</h4>
+                   </div>
+                   <div class="iq-card-header-toolbar d-flex align-items-center">
+                     {% if books.next_page_number %}                   
+                      <a href="?q={{search_keywords}}&page={{ videos.next_page_number }}" class="btn btn-sm btn-primary view-more">Next Page {{ videos.next_page_number }}</a>
+                      {% else %}
+                        <a href="?q={{search_keywords}}&page=1" class="btn btn-sm btn-primary view-more">First Page</a>
+                      {% endif %}
+                   </div>
+                </div> 
+                <div class="iq-card-body">  
+                    <div class="row">
+                        {% for video in videos %}
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="iq-card iq-card-block iq-card-stretch iq-card-height browse-bookcontent">
+                            <div class="iq-card-body p-0">
+                                <div class="d-flex align-items-center">
+                                    <div class="col-6 p-0 position-relative image-overlap-shadow">
+                                        <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{video.thumbnail.url}}" alt=""></a>
+                                        <div class="view-book">
+                                        <a href="/video/{{video.id}}/" class="btn btn-sm btn-white">View Video</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-2">
+                                        <h6 class="mb-1">{{video.title}}</h6>
+                                        <p class="font-size-13 line-height mb-1">{{video.channel.name}}</p>
+                                        <p class="font-size-13 line-height mb-1">{{video.uploadedAt}}</p>
+
+                                        
+                                         <div class="d-flex align-items-center">
+                                            <span class="text-dark font-size-13">
+                                                
+                                                <b>Video: <i class="fa fa-check" style="color: #58a11b;"></i></b>
+                                            </span>
+                                         </div>
+                                        
+                                        </div>                                    
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                       </div>
+                  <br>
+                  <div class="pagination-container">
+                     <nav aria-label="Page navigation">
+                      <ul class="pagination justify-content-center">
+                        {{videos.has_next}}
+                          {% if videos.has_next %}
+                              <li class="page-item">
+                                  <a class="page-link" href="?q={{search_keywords}}&page={{ videos.next_page_number }}">Next</a>
+                              </li>
+                          {% else %}
+                              <li class="page-item">
+                                  <span class="?q={{search_keywords}}&page=1">First Page</span>
+                              </li>
+                          {% endif %}
+          
+                          {% for num in videos.paginator.page_range %}
+                              {% if num == videos.number %}
+                                  <li class="page-item active" aria-current="page">
+                                      <span class="page-link">{{ num }}</span>
+                                  </li>
+                              {% else %}
+                                  <li class="page-item">
+                                      <a class="page-link" href="?q={{search_keywords}}&page={{ num }}">{{ num }}</a>
+                                  </li>
+                              {% endif %}
+                          {% endfor %}
+          
+                          {% if videos.has_next %}
+                              <li class="page-item">
+                                  <a class="page-link" href="?q={{search_keywords}}&page={{ videos.next_page_number }}">Next</a>
+                              </li>
+                          {% else %}
+                              <li class="page-item disabled">
+                                  <span class="page-link">Next</span>
+                              </li>
+                          {% endif %}
+                      </ul>
+                      </nav>
+                     </div> 
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+ </div>
+{% endblock %}

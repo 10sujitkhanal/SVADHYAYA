@@ -1,0 +1,65 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+
+<div id="content-page" class="content-page">
+    <div class="container-fluid">
+       <div class="row">
+          <div class="col-sm-12">
+             <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                <div class="iq-card-header d-flex justify-content-between align-items-center">
+                   <h4 class="card-title mb-0">Random Jokes</h4>
+                </div>
+                <div class="iq-card-body pb-0">
+                   <div class="description-contens align-items-top row">
+                      
+                      <div class="col-md-12">
+                        <div class="iq-card-transparent iq-card-block iq-card-stretch iq-card-height">
+                           <div class="iq-card-body p-0">
+                              <center>
+                              <h3 class="mb-3">Result</h3>
+                              <div class="jokes-result">
+                                 <b class="text-danger setup">{{results.setup}}</b><br>
+                                 Punchline: <b class="punchline">{{results.punchline}}</b>
+                              </div>
+                              <div>
+                                 <img src="https://images.pngnice.com/download/2007/Yellow-Laughing-Emoji-PNG-Transparent-Image.png"/  style="height: 150px; width: 200px;">
+                                 <button id="newJokes" class="btn btn-sm btn-danger">Next Jokes</button>
+                              </div>
+                           </center>
+                           </div>
+                        </div>
+                     </div>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+ </div>
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ <script>
+$(document).ready(function() {
+    $('#newJokes').click(function(event) {
+        event.preventDefault();
+        $('.jokes-result').html(`
+            <h6>Generating... <i class="fa fa-spinner fa-spin"></i></h6>
+        `);
+        $.ajax({
+            url: '/jokes/',
+            type: "POST",
+            data: {
+               csrfmiddlewaretoken: '{{ csrf_token }}'
+           },
+            success: function(data) {
+                $('.jokes-result').html(`
+                  <b class="text-danger setup">${data.setup}</b><br>
+                  Punchline: <b class="punchline">${data.punchline}</b>
+                `);
+
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

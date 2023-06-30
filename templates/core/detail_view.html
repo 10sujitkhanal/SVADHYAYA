@@ -1,0 +1,107 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+
+<div id="content-page" class="content-page">
+    <div class="container-fluid">
+       <div class="row">
+          <div class="col-sm-12">
+             <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                <div class="iq-card-header d-flex justify-content-between align-items-center">
+                   <h4 class="card-title mb-0">Books Description</h4>
+                </div>
+                <div class="iq-card-body pb-0">
+                   <div class="description-contens align-items-top row">
+                      <div class="col-md-4">
+                        <div class="col-xs-4 item-photo">
+                           <img style="width:300px;" src="{{books.volumeInfo.imageLinks.thumbnail}}" />
+                       </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="iq-card-transparent iq-card-block iq-card-stretch iq-card-height">
+                           <div class="iq-card-body p-0">
+                            
+                              <h3 class="mb-3">{{books.volumeInfo.title}}</h3>
+                              <div class="d-flex align-items-center">
+                               <span class="text-dark font-size-13">
+                                   <b>Pdf: {% if books.accessInfo.pdf.isAvailable %}<i class="fa fa-check" style="color: #58a11b;"></i> {% else %} <i class="fa fa-times" style="color: #ff0000;"></i> {% endif %}</b> 
+                                   <b>EPub:{% if books.accessInfo.epub.isAvailable %}<i class="fa fa-check" style="color: #58a11b;"></i>{% else %} <i class="fa fa-times" style="color: #ff0000;"></i> {% endif %}</b> </b>
+                               </span>
+                            </div>
+                              <div class="mb-3 d-block">
+                                 <span class="font-size-20 text-warning">
+                                   {% if books.volumeInfo.ratingsCount %}
+                                   {% with ""|center:books.volumeInfo.averageRating as loop_range %}
+                                       {% for i in loop_range %}
+                                           {% if forloop.counter <= books.volumeInfo.averageRating %}
+                                               <i class="fa fa-star"></i>
+                                           {% else %}
+                                               <i class="fa fa-star-o"></i>
+                                           {% endif %}
+                                       {% endfor %}
+                                       ({{book.volumeInfo.ratingsCount}} reviews)
+                                   {% endwith %}                                                        
+                               {% else %}
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                   <span> (0 review)</span>
+                               {% endif %}
+                                 </span>
+                              </div>
+                              <div class="text-primary ">Categories: <span class="text-body">{% if books.volumeInfo.categories %}{{books.volumeInfo.categories}}{% else %}None{% endif %}</span></div>
+                              <div class="text-primary ">Author: <span class="text-body">{% if books.volumeInfo.authors %}{{books.volumeInfo.authors}}{% else %}None{% endif %}</span></div>
+                              <div class="text-primary ">Publisher: <span class="text-body">{% if books.volumeInfo.publisher %}{{books.volumeInfo.publisher}}{% else %}None{% endif %}</span></div>
+                              <div class="text-primary mb-4">Published Date: <span class="text-body">{{books.volumeInfo.publishedDate}}</span></div>
+                              <span class="text-dark mb-4 pb-4 iq-border-bottom d-block">{{books.volumeInfo.description|safe}}</span>
+                              <div class="mb-4 d-flex align-items-center">
+                                 <a href="/book/read/{{books.id}}/" class="btn btn-primary view-more mr-2">Read Online</a>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                   </div>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-12">
+             <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                <div class="iq-card-header d-flex justify-content-between align-items-center position-relative">
+                   <div class="iq-header-title">
+                      <h4 class="card-title mb-0">Similar Books</h4>
+                   </div>
+                   <div class="iq-card-header-toolbar d-flex align-items-center">
+                      <a href="category.html" class="btn btn-sm btn-primary view-more">View More</a>
+                   </div>
+                </div>
+                <div class="iq-card-body single-similar-contens">
+                   <ul id="single-similar-slider" class="list-inline p-0 mb-0 row">
+                    {% for sb in similar_books.items %}
+                      <li class="col-md-3">
+                         <div class="row align-items-center">
+                            <div class="col-5">
+                               <div class="position-relative image-overlap-shadow">
+                                  <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{sb.volumeInfo.imageLinks.thumbnail}}" alt=""></a>
+                                  <div class="view-book">
+                                     <a href="/book/{{sb.id}}/" class="btn btn-sm btn-white">View Book</a>
+                                  </div>
+                               </div>
+                            </div>
+                            <div class="col-7 pl-0">
+                               <h6 class="mb-2">{{sb.volumeInfo.title}}</h6>
+                               <p class="text-body">Author : {{sb.volumeInfo.authors}}</p>
+                               <a href="/book/{{sb.id}}/" class="text-dark" tabindex="-1">Read Now<i class="ri-arrow-right-s-line"></i></a>
+                            </div>
+                         </div>
+                      </li>
+                    {% endfor %}
+                   </ul>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+ </div>
+{% endblock %}

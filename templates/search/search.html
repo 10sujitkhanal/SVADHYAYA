@@ -1,0 +1,138 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+<style>
+   .pagination-container {
+      display: flex;
+      justify-content: center;
+  }
+</style>
+<div id="content-page" class="content-page">
+    <div class="container-fluid">
+       <div class="row">
+          <div class="col-lg-12">
+             <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                <div class="iq-card-header d-flex justify-content-between align-items-center position-relative">
+                   <div class="iq-header-title">
+                      <h4 class="card-title mb-0">{{search_keywords|capfirst}} Books</h4>
+                   </div>
+                   <div class="iq-card-header-toolbar d-flex align-items-center">                              
+                      <a href="/books/list/?q={{search_keywords}}&page=1" class="btn btn-sm btn-primary view-more">View More</a>
+                   </div>
+                </div> 
+                <div class="iq-card-body">  
+                   <div class="row">
+                    {% for book in books %}
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="iq-card iq-card-block iq-card-stretch iq-card-height browse-bookcontent">
+                            <div class="iq-card-body p-0">
+                                <div class="d-flex align-items-center">
+                                    <div class="col-6 p-0 position-relative image-overlap-shadow">
+                                        <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{book.volumeInfo.imageLinks.thumbnail}}" alt=""></a>
+                                        <div class="view-book">
+                                        <a href="/book/{{book.id}}/" class="btn btn-sm btn-white">View Book</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-2">
+                                        <h6 class="mb-1">{{book.volumeInfo.title}}</h6>
+                                        <p class="font-size-13 line-height mb-1">{{book.volumeInfo.publisher}}</p>
+
+                                        <div class="d-block line-height">
+                                            <span class="font-size-11 text-warning">
+                                                
+                                                {% if book.volumeInfo.ratingsCount %}
+                                                    {% with ""|center:5 as loop_range %}
+                                                        {% for i in loop_range %}
+                                                            {% if forloop.counter <= book.volumeInfo.averageRating %}
+                                                                <i class="fa fa-star"></i>
+                                                            {% else %}
+                                                                <i class="fa fa-star-o"></i>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        ({{book.volumeInfo.ratingsCount}} reviews)
+                                                    {% endwith %}                                                        
+                                                {% else %}
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i> 
+                                                    <span> (0 review)</span>
+                                                {% endif %}
+                                            </span>                                             
+                                         </div>
+                                         <div class="d-flex align-items-center">
+                                            <span class="text-dark font-size-13">
+                                                <b>Pdf: {% if book.accessInfo.pdf.isAvailable %}<i class="fa fa-check" style="color: #58a11b;"></i> {% else %} <i class="fa fa-times" style="--fa-primary-color: #ff0000; --fa-secondary-color: #ff0000;"></i> {% endif %}</b> 
+                                                <b>EPub:{% if book.accessInfo.epub.isAvailable %}<i class="fa fa-check" style="color: #58a11b;"></i>{% else %} <i class="fa fa-times" style="--fa-primary-color: #ff0000; --fa-secondary-color: #ff0000;"></i> {% endif %}</b> </b>
+                                            </span>
+                                         </div>
+                                        
+                                        </div>                                    
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    
+                  </div>
+                  <br>
+                  
+                </div>
+             </div>
+          </div>
+          
+          <div class="col-lg-12">
+            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+               <div class="iq-card-header d-flex justify-content-between align-items-center position-relative">
+                  <div class="iq-header-title">
+                     <h4 class="card-title mb-0">{{search_keywords|capfirst}} Video</h4>
+                  </div>
+                  <div class="iq-card-header-toolbar d-flex align-items-center">                              
+                     <a href="/video/v/list/?q={{search_keywords}}&page=1" class="btn btn-sm btn-primary view-more">View More</a>
+                  </div>
+               </div> 
+               <div class="iq-card-body">  
+                  <div class="row">
+                     {% for video in videos %}
+                     <div class="col-sm-6 col-md-3 col-lg-3">
+                         <div class="iq-card iq-card-block iq-card-stretch iq-card-height browse-bookcontent">
+                         <div class="iq-card-body p-0">
+                             <div class="d-flex align-items-center">
+                                 <div class="col-6 p-0 position-relative image-overlap-shadow">
+                                     <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{video.thumbnail.url}}" alt=""></a>
+                                     <div class="view-book">
+                                     <a href="/video/{{video.id}}/" class="btn btn-sm btn-white">View Video</a>
+                                     </div>
+                                 </div>
+                                 <div class="col-6">
+                                     <div class="mb-2">
+                                     <h6 class="mb-1">{{video.title}}</h6>
+                                     <p class="font-size-13 line-height mb-1">{{video.channel.name}}</p>
+                                     <p class="font-size-13 line-height mb-1">{{video.uploadedAt}}</p>
+
+                                     
+                                      <div class="d-flex align-items-center">
+                                         <span class="text-dark font-size-13">
+                                             
+                                             <b>Video: <i class="fa fa-check" style="color: #58a11b;"></i></b>
+                                         </span>
+                                      </div>
+                                     
+                                     </div>                                    
+                                 </div>
+                             </div>
+                         </div>
+                         </div>
+                     </div>
+                 {% endfor %}
+                  </div>
+               </div>
+            </div>
+         </div>
+       </div>
+    </div>
+ </div>
+{% endblock %}
