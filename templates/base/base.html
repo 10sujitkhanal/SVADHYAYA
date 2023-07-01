@@ -37,16 +37,16 @@
                <nav class="iq-sidebar-menu">
                   <ul id="iq-sidebar-toggle" class="iq-menu">
                      <li>
-                        <a href="/" class="iq-waves-effect" aria-expanded="true"><span class="ripple rippleEffect"></span><i class="las la-home iq-arrow-left"></i><span>Books</span></a>
+                        <a href="/" class="iq-waves-effect"><i class="fa fa-book iq-arrow-left"></i><span>Books</span></a>
                      </li>
                      <li>
-                        <a href="/video/" class="iq-waves-effect" aria-expanded="true"><span class="ripple rippleEffect"></span><i class="las la-home iq-arrow-left"></i><span>Videos</span></a>
+                        <a href="/video/" class="iq-waves-effect" ><i class="fa fa-youtube-play iq-arrow-left"></i><span>Videos</span></a>
                      </li>
                      <li>
-                        <a href="/solver/" class="iq-waves-effect"><i class="las la-home iq-arrow-left"></i><span>Solver</span></a>
+                        <a href="/solver/" class="iq-waves-effect"><i class="fa fa-exclamation-circle"></i><span>Solver</span></a>
                      </li>
                      <li>
-                        <a href="/jokes/" class="iq-waves-effect"><i class="las la-home iq-arrow-left"></i><span>Jokes</span></a>
+                        <a href="/jokes/" class="iq-waves-effect"><i class="fa fa-hand-peace-o"></i><span>Jokes</span></a>
                      </li>
                   </ul>
                </nav>
@@ -72,8 +72,8 @@
                      <h5 class="mb-0">Book Page</h5>
                      <nav aria-label="breadcrumb">
                         <ul class="breadcrumb">
-                           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                           <li class="breadcrumb-item active" aria-current="page">Book Page</li>
+                           <li class="breadcrumb-item"><a href="/">Home</a></li>
+                           <li class="breadcrumb-item active" aria-current="/books/list/">Book Page</li>
                         </ul>
                      </nav>
                   </div>
@@ -92,8 +92,8 @@
                            <a href="#" class="search-toggle iq-waves-effect text-gray rounded">
                               <i class="ri-search-line"></i>
                            </a>
-                           <form action="#" class="search-box p-0">
-                              <input type="text" class="text search-input" placeholder="Type here to search...">
+                           <form action="/search/" method="get" class="search-box p-0">
+                              <input type="text" class="text search-input" name="q" placeholder="Type here to search...">
                               <a class="search-link" href="#"><i class="ri-search-line"></i></a>
                            </form>
                         </li>
