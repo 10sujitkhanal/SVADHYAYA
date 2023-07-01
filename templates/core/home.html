@@ -47,7 +47,8 @@
                 <div class="iq-card-body">  
                    <div class="row">
                     {% for book in books %}
-                        {% if book.accessInfo.pdf.isAvailable or book.accessInfo.epub.isAvailable %}
+                        {% if book.accessInfo.accessViewStatus != "NONE" %}
+                        {{book.accessInfo.accessViewStatus}}
                         <div class="col-sm-6 col-md-3 col-lg-3">
                             <div class="iq-card iq-card-block iq-card-stretch iq-card-height browse-bookcontent">
                             <div class="iq-card-body p-0">

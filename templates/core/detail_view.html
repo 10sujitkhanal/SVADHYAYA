@@ -14,7 +14,7 @@
                    <div class="description-contens align-items-top row">
                       <div class="col-md-4">
                         <div class="col-xs-4 item-photo">
-                           <img style="width:300px;" src="{{books.volumeInfo.imageLinks.large}}" />
+                           <img style="width:300px;" src="{% if books.volumeInfo.imageLinks.large %}{{books.volumeInfo.imageLinks.large}} {% else %}{{books.volumeInfo.imageLinks.thumbnail}}{% endif %}" />
                        </div>
                       </div>
                       <div class="col-md-6">
@@ -71,9 +71,6 @@
                 <div class="iq-card-header d-flex justify-content-between align-items-center position-relative">
                    <div class="iq-header-title">
                       <h4 class="card-title mb-0">Similar Books</h4>
-                   </div>
-                   <div class="iq-card-header-toolbar d-flex align-items-center">
-                      <a href="category.html" class="btn btn-sm btn-primary view-more">View More</a>
                    </div>
                 </div>
                 <div class="iq-card-body single-similar-contens">

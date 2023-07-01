@@ -150,12 +150,21 @@
     <script type="text/javascript">
       google.books.load();
 
+      function nextStep(viewer) {
+        window.setTimeout(function() {
+          viewer.nextPage();
+          nextStep(viewer);
+        }, 3000);
+      }
+      
       function initialize() {
         var viewer = new google.books.DefaultViewer(document.getElementById('viewerCanvas'));
         viewer.load('ISBN:{{ISBN}}');
+        nextStep(viewer);
       }
-
+      
       google.books.setOnLoadCallback(initialize);
+
     </script>
 <div id="content-page" class="content-page">
     <div class="container-fluid">
